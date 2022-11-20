@@ -1,8 +1,9 @@
 import "./App.css";
 import { BiTrash } from "react-icons/bi";
-import { useState } from "react";
 import { useTodo } from "./hooks/useTodo";//カスタムフック化
-
+import { InputForm } from "./components/atoms/InputForm";
+import { AddTodo } from "./components/organisms/AddTodo";
+import { TodoList } from "./components/organisms/TodoList";
 /* TODO
 追加と削除時のアニメーションをつける
 isDoneなどのチェック機能をつける
@@ -20,33 +21,12 @@ function App() {
       <div className="todo">
         <h1>Todo List</h1>
         <p>ADD TODO</p>
-        <label htmlFor="todo">
-          <input
-            type="text"
-            value={title}
-            onChange={handleTodo}
-            onKeyDown={handleKeyDown}
-            placeholder="New Todo"
-          />
-        </label>
-        <label htmlFor="searchKey">
-          <input
-            type="text"
-            value={searchKey}
-            onChange={handleSearch}
-            placeholder="Search Keyword"
-          />
-        </label>
-        <ul className="list">
-          {showTodoList().map((item) => (
-            <li key={item.id} className="list_item">
-              {item.title}
-              <button onClick={() => deleteItem(item.id)}>
-                <BiTrash />
-              </button>
-            </li>
-          ))}
-        </ul>
+        {/* todo入力エリア */}
+        <AddTodo title={title} handleTodo={handleTodo} handleKeyDown={handleKeyDown} />
+        {/* todo検索エリア */}
+        <InputForm searchKey={searchKey} handleSearch={handleSearch} />
+        {/* todoリスト表示エリア */}
+        <TodoList showTodoList={showTodoList} deleteItem={deleteItem}  />
       </div>
     </div>
   );
